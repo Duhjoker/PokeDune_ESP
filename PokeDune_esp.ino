@@ -11,6 +11,7 @@
 #include "Monsters.h"
 #include "Battle.h"
 #include "Menu.h"
+#include "Inventory.h"
 //////////////////////////////////////////////////////////////////////////////
 #include "Adafruit_seesaw.h"
 
@@ -105,7 +106,11 @@ if(!digitalRead(IRQ_PIN1)){
     case STATE_Menu:
       Menu();
       break;
-
+      
+    case STATE_Item_list:
+      printItemlist();
+      break;
+      
       }
   tft.updateScreen();
 
