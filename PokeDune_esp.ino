@@ -1,7 +1,7 @@
-/*This is the Main function file for the GameR-Iot Multiple MCU Arduino driven 
- * game system and DIY console. This is a demo game RPG set in the Dune Universe
- * created by Frank Herbert.
- */
+/*This is the Main function file for the GameR-Iot Multiple MCU Arduino driven
+   game system and DIY console. This is a demo game RPG set in the Dune Universe
+   created by Frank Herbert.
+*/
 #include <Grafx_esp.h>
 #include <SPI.h>
 #include <EEPROM.h>
@@ -50,71 +50,76 @@ void setup() {
   tft.fillScreen(BLACK);
   //tft.setFrameRate(60);
   tft.persistence = false;
-////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////
- if(!ss1.begin(0x49)){
+  ////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////
+  if (!ss1.begin(0x49)) {
     Serial.println("ERROR!");
-    while(1);
+    while (1);
   }
-  if(!ss2.begin(0x4a)){
+  if (!ss2.begin(0x4a)) {
     Serial.println("ERROR!");
-    while(1);
+    while (1);
   }
-  else{
+  else {
     Serial.println("seesaw started");
     Serial.print("version: ");
     Serial.println(ss1.getVersion(), HEX);
   }
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
   ss1.pinModeBulk(button_mask, INPUT_PULLUP);
   ss1.setGPIOInterrupts(button_mask, 1);
   pinMode(IRQ_PIN1, INPUT);
-/////////////////////////////////////////////////////////  
-   ss2.pinModeBulk(button_mask2, INPUT_PULLUP);
-   ss2.setGPIOInterrupts(button_mask2, 1);
+  /////////////////////////////////////////////////////////
+  ss2.pinModeBulk(button_mask2, INPUT_PULLUP);
+  ss2.setGPIOInterrupts(button_mask2, 1);
   pinMode(IRQ_PIN2, INPUT);
-/////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////
-     tft.useFrameBuffer(use_fb);
- }
+  /////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////
+  tft.useFrameBuffer(use_fb);
+}
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////Loop////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 void loop() {
-     
+
   switch (state) {
 
     case STATE_Title:
 
       titlepage();
-if(!digitalRead(IRQ_PIN1)){
-    uint32_t buttons = ss1.digitalReadBulk(button_mask);     
- if (! (buttons & (1 << BUTTON_SEL))) {
-       Serial.println("Button SEL pressed");
-        state = STATE_Player;
+      if (!digitalRead(IRQ_PIN1)) {
+        uint32_t buttons = ss1.digitalReadBulk(button_mask);
+        if (! (buttons & (1 << BUTTON_SEL))) {
+          Serial.println("Button SEL pressed");
+          state = STATE_Player;
 
-       }
-}
+        }
+      }
       break;
-  
+
     case STATE_Player:
       drawplayer();
+      triggerBattle(player.player_x, player.player_y);
       break;
 
     case STATE_Menu:
       Menu();
       break;
-      
+
     case STATE_Item_list:
       printItemlist();
       break;
-      
-      }
+
+    case STATE_Battle:
+      drawBattle();
+      break;
+
+  }
   tft.updateScreen();
 
- }
+}
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////PROGRESS//////////////////////////////////////////////////////////////////////
@@ -132,25 +137,25 @@ bool checkLoad()
 {
   byte nr;
   EEPROM.get(0, nr);
-  
+
   return (nr == saveKey);
 }
 
 void load()
 {
-    EEPROM.get(1, player);
+  EEPROM.get(1, player);
 }
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-void titlepage(){
-palette[0] = 0; palette[1] = BLACK;  palette[2] = BLUE; palette[3] = BROWN; palette[4] = DARKGREEN; palette[5] = GREY;
-palette[6] = PINK; palette[7] = RED; palette[8] = BEIGE; palette[9] = GREEN; palette[a]= DARKGREY; palette[b] = LIGHTGREY;
-palette[c] = YELLOW; palette[d] = PURPLE; palette[e] = WHITE; palette[f] = ORANGE;
-  tft.writeRectNBPP(0,0,320,240,4, title_1, palette);
-  
+void titlepage() {
+  palette[0] = 0; palette[1] = BLACK;  palette[2] = BLUE; palette[3] = BROWN; palette[4] = DARKGREEN; palette[5] = GREY;
+  palette[6] = PINK; palette[7] = RED; palette[8] = BEIGE; palette[9] = GREEN; palette[a] = DARKGREY; palette[b] = LIGHTGREY;
+  palette[c] = YELLOW; palette[d] = PURPLE; palette[e] = WHITE; palette[f] = ORANGE;
+  tft.writeRectNBPP(0, 0, 320, 240, 4, title_1, palette);
+
 }
 
 
