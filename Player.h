@@ -4,6 +4,7 @@
 #include "world.h"
 #include "Variables.h"
 #include "Inventory.h"
+#include "Battle.h"
 
 elapsedMillis MoveRepeat;
 
@@ -13,6 +14,10 @@ bool checkcolision(void);
 ///////////////////////////////////Loop////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////
 void drawplayer() {
+
+  if (random(0, 100) == 0) {
+    state = STATE_Battle;
+  }
   ///////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////camera controls////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////
@@ -250,6 +255,7 @@ void drawplayer() {
     player.player_y -= 4;    ///move player y - 4 pixels
     if (checkcolision())
     {
+
       player.player_y += 4; ///causes player to stop when collision happens
       player.player_directionRepeat = 1;
     }
@@ -274,6 +280,7 @@ void drawplayer() {
     player.player_y += 4;    ///move player y - 4 pixels
     if (checkcolision())
     {
+
       player.player_y -= 4;
       player.player_directionRepeat = 2;
     }
@@ -297,6 +304,7 @@ void drawplayer() {
     player.player_x -= 4;
     if (checkcolision())
     {
+
       player.player_x += 4;
       player.player_directionRepeat = 2;
     }
@@ -319,6 +327,7 @@ void drawplayer() {
     player.player_x += 4;
     if (checkcolision())
     {
+
       player.player_x -= 4;
       player.player_directionRepeat = 1;
     }
@@ -610,11 +619,25 @@ bool checkcolision(void) // Transformed it into a function
         return true;
       }
 
-      else if ((tft.solid[i].spritecol == chest) && player.room == 3) {
+      /*else if ((tft.solid[i].spritecol == chest) && player.room == 3) {
         tft.Popup(F(" ""You got Spice"" "), 2, 75, 20);
-        addItemToInventory(ITEM_Spice);
+        added = addItemToInventory(ITEM_Spice);
         Serial.println("Added a Spice into slot 0");
 
+        return true;
+      }*/
+
+      else if ((tft.solid[i].spritecol == chest1) && player.room == 3) {
+        if (!Chest.isOpen)
+        {
+          bool success = addItemToInventory(ITEM_Spice);
+          if (success)
+          {
+            tft.Popup(F(" ""Chest is empty."" "), 2, 75, 20);
+            Chest.isOpen = true;
+            Chest.itemId = NoItem;
+          }
+        }
         return true;
       }
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

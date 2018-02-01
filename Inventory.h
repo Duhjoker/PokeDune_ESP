@@ -8,9 +8,11 @@
 #define ITEM_Thumper        4
 #define ITEM_Glowglobe      5
 #define ITEM_Stilltent      6
-#define ITEM_Abban          7
+#define ITEM_Abba           7
 #define ITEM_Stillsuit      8
 #define ITEM_Fremkit        9
+#define ITEM_NoItem         a
+
 
 #define MAX_ITEM            10
 #define SLOT_AVAILABLE      255
@@ -27,9 +29,9 @@ struct Slot {
 };
 
 Slot slots[NUMBER_OF_SLOTS] = {
-  { 200, 48, 81, 16, SLOT_AVAILABLE},
-  { 200, 66, 81, 16, SLOT_AVAILABLE},
-  { 200, 84, 81, 16, SLOT_AVAILABLE},
+  { 200, 48,  81, 16, SLOT_AVAILABLE},
+  { 200, 66,  81, 16, SLOT_AVAILABLE},
+  { 200, 84,  81, 16, SLOT_AVAILABLE},
   { 200, 102, 81, 16, SLOT_AVAILABLE},
   { 200, 112, 81, 16, SLOT_AVAILABLE},
   { 200, 120, 81, 16, SLOT_AVAILABLE},
@@ -39,6 +41,11 @@ Slot slots[NUMBER_OF_SLOTS] = {
   { 200, 192, 81, 16, SLOT_AVAILABLE},
 };
 
+struct Chest
+{
+    int itemId;
+    bool isOpen;
+};
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -197,8 +204,8 @@ void printItemlist() {
     if (! (buttons & (1 << BUTTON_A))) {
       state = STATE_Menu;
     }
-  //////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
   }
 }
 #endif

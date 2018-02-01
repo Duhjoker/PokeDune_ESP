@@ -5,7 +5,6 @@
 #include "Variables.h"
 #include "Monsters.h"
 
-//int battle options[] = {"Attack", "Item", "Weirding", "Flee"};
 
 struct CursorB
 {
@@ -14,37 +13,9 @@ struct CursorB
   int cursorB_direction;
 };
 
-CursorB cursorb = { 9, 136, 1};
+CursorB cursorb = { 9, 138, 1};
 
-int count = 0;
-
-uint16_t x;
-uint16_t y;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-void triggerBattle(uint16_t player_x, uint16_t player_y) {
-
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  /////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  if (count == 0)
-  {
-    x = random(6, 30); //sets the horizontal axis trigger from ten to thirty steps
-    y = random(6, 30); //sets the vertical axis trigger from ten to thirty steps
-    count = 1;
-  }
-
-  Rect rectA {x, y, 16, 16};
-  Rect rectB {player.player_x, player.player_y, 16, 16};
-
-  if (tft.collideRectRect( rectA.x, rectA.y, rectA.width, rectA.height, rectB.x, rectB.y, rectB.width, rectB.height))
-  {
-    state = STATE_Battle;
-  }
-};
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////
 
 void drawBattle() {
   //////////////////////////////////////////////////////////////////////////////
@@ -60,14 +31,12 @@ void drawBattle() {
   palette[7] = RED;          palette[f] = ORANGE;
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  uint16_t x;
-  uint16_t y;
 
-  Rect rectC {x, y, 33, 7};
-  Rect rectD {x, y, 22, 7};
-  Rect rectE {x, y, 47, 7};
-  Rect rectF {x, y, 23, 7};
-  Rect rectG {cursorb.cursorB_x, cursorb.cursorB_y, 26, 26};
+  Rect rectC {24, 138, 33, 7};
+  Rect rectD {24, 164, 22, 7};
+  Rect rectE {24, 190, 47, 7};
+  Rect rectF {24, 216, 23, 7};
+  Rect rectG {cursorb.cursorB_x, cursorb.cursorB_y, 16, 16};
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   tft.fillScreen(BLACK);
@@ -81,19 +50,19 @@ void drawBattle() {
   tft.println("Cave spider");
   tft.drawRoundRect(10, 130, 118, 104, 4, WHITE);
   tft.fillRoundRect(11, 131, 115, 101, 4, BLUE);
-  tft.setCursor(24, 136);
+  tft.setCursor(24, 138);
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
   tft.println("Attack");
-  tft.setCursor(24, 160);
+  tft.setCursor(24, 164);
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
   tft.println("Item");
-  tft.setCursor(24, 181);
+  tft.setCursor(24, 190);
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
   tft.println("Weirding");
-  tft.setCursor(24, 211);
+  tft.setCursor(24, 216);
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
   tft.println("Flee");
@@ -107,10 +76,6 @@ void drawBattle() {
   if (x1 > 600 && last_x < 600) {
     tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 16, 16, 4, cursordot2, palette);
     cursorb.cursorB_y -= 26;
-    if (checkcolision())
-    {
-      cursorb.cursorB_y += 26;
-    }
   }
   if (cursorb.cursorB_y <= 136) {
     cursorb.cursorB_y = 136;
@@ -122,10 +87,6 @@ void drawBattle() {
   if (x1 < 400 && last_x > 400) {
     tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 16, 16, 4, cursordot2, palette);
     cursorb.cursorB_y += 26;
-    if (checkcolision())
-    {
-      cursorb.cursorB_y -= 26;
-    }
   }
   if (cursorb.cursorB_y >= 240) {
     cursorb.cursorB_y = 240;
@@ -135,7 +96,7 @@ void drawBattle() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   if (cursorb.cursorB_direction == 1) {
-    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 26, 26, 4, cursordot2, palette);
+    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 16, 16, 4, cursordot2, palette);
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -150,7 +111,7 @@ void drawBattle() {
     }
     else  if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectD.x, rectD.y, rectD.width, rectD.height, rectG.x, rectG.y, rectG.width, rectG.height)))
     {
-      tft.fillScreen(RED);
+      STATE = STATE_Item_list_bat;
     }
     else  if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectE.x, rectE.y, rectE.width, rectE.height, rectG.x, rectG.y, rectG.width, rectG.height)))
     {
@@ -164,4 +125,17 @@ void drawBattle() {
     ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   }
 };
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void ItemlistBat() {
+  tft.drawRoundRect(136, 130, 184, 104, 4, WHITE);
+  tft.fillRoundRect(136, 131, 184, 101, 4, BLUE);
+  if (!digitalRead(IRQ_PIN2)) {
+    uint32_t buttons = ss2.digitalReadBulk(button_mask2);
+    if (! (buttons & (1 << BUTTON_A))) {
+      state = STATE_Battle;
+    }
+  }
+
+
 #endif

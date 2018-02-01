@@ -16,7 +16,86 @@ grey       5 palette[5];      yellow     c palette[c];
 pink       6 palette[6];      purple     d palette[d];
 red        7 palette[7];      white      e palette[e];
  */
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/*struct monster {
+  int x;
+  int y;
+  int cursor_x;
+  int cursor_y;
+  int health;
+  int attack;
+  int defense;
+  uint8_t MonId;
+  const uint16_t *pixels;
+  };*/
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+#define MONSTER_Cave_spider          0
+#define MONSTER_Desert_bat           1
+#define MONSTER_Desert_hare          2
+#define MONSTER_Desert_scorpion      3
+#define MONSTER_Desert_slig          4
+#define MONSTER_Face_dancer          5
+#define MONSTER_Outcast              6
+#define MONSTER_Kangaroo_mouse       7
+#define MONSTER_Laza_tiger           8
+#define MONSTER_Sandworm             9
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/*Monster monster[] = {
+  {143, 50, 90, 94, 25,  8, 10, 0, };
+  {143, 50, 90, 94, 30, 10,  7, 1};
+  {143, 50, 90, 94, 40,  7,  6, 2}; 
+  {143, 50, 90, 94, 45, 11, 20, 3};
+  {143, 50, 90, 94, 50, 12, 18, 4};
+  {143, 50, 90, 94, 60, 14, 20, 5};
+  {143, 50, 90, 94, 60, 16, 10, 6};
+  {143, 50, 90, 94, 25,  8, 10, 7};
+  {143, 50, 90, 94, 70, 20, 20, 8};
+  {143, 50, 90, 94, 80, 25, 40, 9};
+  
+};*/
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/*const char * getMonName(uint8_t monId)
+{
+  switch (monId)
+  {
+    case 0: return "Cave Spider";
+    case 1: return "Desert Bat";
+    case 2: return "Desert Hare";
+    case 3: return "Desert Scorpion";
+    case 4: return "Desert Slig";
+    case 5: return "Face Dancer";
+    case 6: return "Outcast";
+    case 7: return "Kangaroo Mouse";
+    case 8: return "Laza Tiger";
+    case 9: return "Sand Worm";
+  }
+}*/
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/*void DrawMonster(uint8_t Monid)
+{
+  tft.setCursor(monster.cursor_x, monster.cursor_y);
+  tft.setTextSize(2);
+  tft.setTextColor(WHITE);
+  tft.println(getMonName(monster.MonId));
 
+  switch (monId) {
+    case 0: tft.writeRectNBPP(monster.x, monster.y, 34, 24, 4, cavespider, palette); ///how do add bitmap names
+    case 1: tft.writeRectNBPP(monster.x, monster.y, 48, 40, 4, desertbat, palette); ///how do add bitmap names
+    case 2: tft.writeRectNBPP(monster.x, monster.y, 34, 22, 4, deserthare, palette); ///how do add bitmap names
+    case 3: tft.writeRectNBPP(monster.x, monster.y, 44, 34, 4, desertscorp, palette); ///how do add bitmap names
+    case 4: tft.writeRectNBPP(monster.x, monster.y, 28, 36, 4, desertslig, palette); ///how do add bitmap names
+    case 5: tft.writeRectNBPP(monster.x, monster.y, 34, 40, 4, facedancer, palette); ///how do add bitmap names
+    case 6: tft.writeRectNBPP(monster.x, monster.y, 34, 32, 4, outcast, palette); ///how do add bitmap names
+    case 7: tft.writeRectNBPP(monster.x, monster.y, 38, 36, 4, kangaroomouse, palette); ///how do add bitmap names
+    case 8: tft.writeRectNBPP(monster.x, monster.y, 44, 32, 4, lazatiger, palette); ///how do add bitmap names
+    case 9: tft.writeRectNBPP(monster.x, monster.y, 24, 34, 4, sandworm, palette); ///how do add bitmap names
+  }
+*/
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////

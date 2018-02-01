@@ -101,7 +101,7 @@ void loop() {
 
     case STATE_Player:
       drawplayer();
-      triggerBattle(player.player_x, player.player_y);
+      //      triggerBattle(player.player_x, player.player_y);
       break;
 
     case STATE_Menu:
@@ -116,6 +116,9 @@ void loop() {
       drawBattle();
       break;
 
+    case STATE_Item_list_bat
+        ItemlistBat();
+      break;
   }
   tft.updateScreen();
 

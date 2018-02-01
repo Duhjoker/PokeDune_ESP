@@ -9,11 +9,12 @@ Adafruit_seesaw ss1;
 Adafruit_seesaw ss2;
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
-#define STATE_Title       0
-#define STATE_Player      1
-#define STATE_Menu        2
-#define STATE_Item_list   3
-#define STATE_Battle      4
+#define STATE_Title          0
+#define STATE_Player         1
+#define STATE_Menu           2
+#define STATE_Item_list      3
+#define STATE_Battle         4
+#define STATE_Item_list_bat  5
 
 byte state = STATE_Title;
 byte nextState = STATE_Player;
