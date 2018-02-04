@@ -6,26 +6,6 @@
 #include "World.h"
 #include "Inventory.h"
 
- struct CursorC
-  {
-    int cursorC_x;
-    int cursorC_y;
-    int cursor_direction;
-  };
-
-CursorC cursorc = { 68, 94, 1};
-///////////////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////////////////
-struct CursorA
-{
-  int cursorA_x;
-  int cursorA_y;
-  int cursor_direction;
-};
-
-CursorA cursora = { 0, 27, 1};
-////////////////////////////////////////////////////////////////////////////////////////////
-
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -55,23 +35,23 @@ void Menu() {
   ////////////////////////////////////////////////////////////////////////////
   tft.fillRoundRect(0, 0, 136, 240, 4, WHITE);
   tft.fillRoundRect(4, 4, 128, 232, 4, BLUE);
-  tft.setCursor(24,24);
+  tft.setCursor(24, 24);
   tft.setTextColor(WHITE);
   tft.setTextSize(3);
   tft.println("Item");
-  tft.setCursor(24,64);
+  tft.setCursor(24, 64);
   tft.setTextColor(WHITE);
   tft.setTextSize(3);
   tft.println("Equip");
-  tft.setCursor(24,104);
+  tft.setCursor(24, 104);
   tft.setTextColor(WHITE);
   tft.setTextSize(3);
   tft.println("Weird");
-  tft.setCursor(24,144);
+  tft.setCursor(24, 144);
   tft.setTextColor(WHITE);
   tft.setTextSize(3);
   tft.println("Stats");
-  tft.setCursor(24,184);
+  tft.setCursor(24, 184);
   tft.setTextColor(WHITE);
   tft.setTextSize(3);
   tft.println("Save");
@@ -126,7 +106,7 @@ void Menu() {
 
     if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectB.x, rectB.y, rectB.width, rectB.height, rectH.x, rectH.y, rectH.width, rectH.height)))
     {
-     state = STATE_Item_list;
+      state = STATE_Item_list;
     }
     else if ((! (buttons & (1 << BUTTON_X))  && tft.collideRectRect( rectC.x, rectC.y, rectC.width, rectC.height, rectH.x, rectH.y, rectH.width, rectH.height)))
     {
@@ -142,7 +122,7 @@ void Menu() {
     }
     else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectF.x, rectF.y, rectF.width, rectF.height, rectH.x, rectH.y, rectH.width, rectH.height)))
     {
-      tft.fillScreen(WHITE);
+      state = STATE_Save_game;
     }
   }
 }
@@ -155,8 +135,8 @@ void Menu() {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void loadgame() {
-/////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
   palette[0] = 0;            palette[8] = BEIGE;
   palette[1] = BLACK;        palette[9] = GREEN;
   palette[2] = BLUE;         palette[a] = DARKGREY;
@@ -165,8 +145,8 @@ void loadgame() {
   palette[5] = GREY;         palette[d] = PURPLE;
   palette[6] = PINK;         palette[e] = WHITE;
   palette[7] = RED;          palette[f] = ORANGE;
-//////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////
 
   Rect rectA {80, 94, 80, 20};
   Rect rectB {80, 128, 80, 20};
@@ -223,21 +203,114 @@ void loadgame() {
   if (!digitalRead(IRQ_PIN2)) {
     uint32_t buttons = ss2.digitalReadBulk(button_mask2);
     //////////////////////////////////////////////////////////////////////////////
-    /////////////////////////////////exit menu////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////
 
-         if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectA.x, rectA.y, rectA.width, rectA.height, rectC.x, rectC.y, rectC.width, rectC.height)))
+    if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectA.x, rectA.y, rectA.width, rectA.height, rectC.x, rectC.y, rectC.width, rectC.height)))
     {
       state = STATE_Player;
     }
     else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectB.x, rectB.y, rectB.width, rectB.height, rectC.x, rectC.y, rectC.width, rectC.height)))
     {
-      tft.fillScreen(PURPLE);
+    checkLoad();{
+      load();
+       state = STATE_Player;
+    }
     }
   }
 }
 
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void savegame() {
+  /////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////
+  palette[0] = 0;            palette[8] = BEIGE;
+  palette[1] = BLACK;        palette[9] = GREEN;
+  palette[2] = BLUE;         palette[a] = DARKGREY;
+  palette[3] = BROWN;        palette[b] = LIGHTGREY;
+  palette[4] = DARKGREEN;    palette[c] = YELLOW;
+  palette[5] = GREY;         palette[d] = PURPLE;
+  palette[6] = PINK;         palette[e] = WHITE;
+  palette[7] = RED;          palette[f] = ORANGE;
+  //////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////
 
+  Rect rectA {80, 94, 80, 20};
+  Rect rectB {80, 128, 80, 20};
+  Rect rectC {cursord.cursorD_x, cursord.cursorD_y, 32, 32};
+
+  tft.fillRoundRect(80, 80, 162, 82, 4, WHITE);
+  tft.fillRoundRect(85, 84, 153, 74, 4, BLUE);
+  tft.setCursor(91, 94);
+  tft.setTextColor(WHITE);
+  tft.setTextSize(3);
+  tft.println("Save");
+  tft.setCursor(91, 128);
+  tft.setTextColor(WHITE);
+  tft.setTextSize(3);
+  tft.println("Load");
+  ////////////////////////////////////////////////////////////////
+  ////////////////////////////////////////////////////////////////
+  int y = ss1.analogRead(2);
+  int x = ss1.analogRead(3);
+
+  /// if(tft.Bpressed(BTN_UP)){
+  if (x > 600 && last_x < 600) {
+    tft.writeRectNBPP(cursorc.cursorC_x, cursorc.cursorC_y, 32, 32, 4, cursor3, palette);
+    cursord.cursor_direction = 1;
+    cursord.cursorD_y -= 40;
+  }
+  if (cursord.cursorD_y <= 94) {
+    cursord.cursorD_y = 94;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////Down///////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  /// if(tft.Bpressed(BTN_DOWN)){
+  if (x < 400 && last_x > 400) {
+    tft.writeRectNBPP(cursorc.cursorC_x, cursorc.cursorC_y, 32, 32, 4, cursor3, palette);
+    cursord.cursor_direction = 1;
+    cursord.cursorD_y += 40;
+  }
+  if (cursord.cursorD_y >= 130) {
+    cursord.cursorD_y = 130;
+  }
+
+  last_x = x;
+  //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  if (cursord.cursor_direction == 1) {
+    tft.writeRectNBPP(cursord.cursorD_x, cursord.cursorD_y, 32, 32, 4, cursor3, palette);
+  }
+  //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  if (!digitalRead(IRQ_PIN2)) {
+    uint32_t buttons = ss2.digitalReadBulk(button_mask2);
+     if (! (buttons & (1 << BUTTON_A))) {
+      state = STATE_Menu;
+    }
+    //////////////////////////////////////////////////////////////////////////////
+    /////////////////////////////////exit menu////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////
+
+    if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectA.x, rectA.y, rectA.width, rectA.height, rectC.x, rectC.y, rectC.width, rectC.height)))
+    {
+        save();
+         tft.Popup(F(" ""Game Saved"" "), 1, 120, 120);
+         state = STATE_Player;
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectB.x, rectB.y, rectB.width, rectB.height, rectC.x, rectC.y, rectC.width, rectC.height)))
+    {
+      checkLoad();{
+      load();
+       state = STATE_Player;
+    }
+    }
+  }
+}
 
 
 #endif

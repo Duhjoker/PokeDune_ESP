@@ -240,7 +240,7 @@ void drawplayer() {
   ///////////////////////////////////////////////////////////////////////////////
   int y = ss1.analogRead(2);
   int x = ss1.analogRead(3);
-  #define MoveRepeatRate 50 // set this for how long in milis to wait for auto repeat move
+#define MoveRepeatRate 50 // set this for how long in milis to wait for auto repeat move
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -642,28 +642,30 @@ bool checkcolision(void) // Transformed it into a function
           }
         }
         return true;
+        }
+
+     /* else if (tft.solid[i].spritecol == chest1)
+      {
+        for (int j = 0; j < rooms[i].getChestCount(); ++j)
+        {
+          Chest & chest = rooms[i].getChest(j);
+          if ((chest.x / chest.w) == (player.player_x / player.w) && (chest.y / chest.h) == (player.player_y / player.h))
+          {
+            if (!chest.isOpen)
+            {
+              bool success = addItemToInventory(ITEM_Spice);
+              if (success)
+              {
+                tft.Popup(F(" ""Chest is empty."" "), 2, 75, 20);
+                chest.isOpen = true;
+                chest.itemId = NoItem;
+              }
+            }
+          }
+        }
+        return true;
       }
-
-      /*          else if (tft.solid[i].spritecol == chest1)
-
-                  for (int i = 0; i < player.room.getChestCount(); ++i)
-                  {
-                    Chest & chest = player.room.getChest(i);
-                    if (chest.x == player.player_x && chest.y == player.player_y)
-                    {
-                      if (!chest.isOpen)
-                      {
-                        bool success = addItemToInventory(ITEM_Spice);
-                        if (success)
-                        {
-                          tft.Popup(F(" ""Chest is empty."" "), 2, 75, 20);
-                          chest.isOpen = true;
-                          chest.itemId = NoItem;
-                        }
-                      }
-                    }
-                  }
-      */
+*/
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

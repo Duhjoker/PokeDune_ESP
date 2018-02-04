@@ -1,6 +1,8 @@
 #ifndef _Inventory_H_
 #define _Inventory_H_
 
+#include "Variables.h"
+
 #define ITEM_Spice          0
 #define ITEM_Water          1
 #define ITEM_Ring           2
@@ -27,73 +29,81 @@ struct Slot {
   int slot_h;
   uint8_t itemId;
   uint8_t quantity;
+  uint8_t S;     // number of items in stack
 };
 
 Slot slots[NUMBER_OF_SLOTS] = {
-  { 180, 24,  81, 16, SLOT_AVAILABLE, 0},
-  { 180, 42,  81, 16, SLOT_AVAILABLE, 0},
-  { 180, 60,  81, 16, SLOT_AVAILABLE, 0},
-  { 180, 78,  81, 16, SLOT_AVAILABLE, 0},
-  { 180, 96,  81, 16, SLOT_AVAILABLE, 0},
-  { 180, 114, 81, 16, SLOT_AVAILABLE, 0},
-  { 180, 132, 81, 16, SLOT_AVAILABLE, 0},
-  { 180, 150, 81, 16, SLOT_AVAILABLE, 0},
-  { 180, 168, 81, 16, SLOT_AVAILABLE, 0},
-  { 180, 186, 81, 16, SLOT_AVAILABLE, 0}, 
-  { 180, 204, 81, 16, SLOT_AVAILABLE, 0},
-  { 180, 222, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 16,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 34,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 52,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 70,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 88,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 106, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 124, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 142, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 160, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 178, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 196, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 214, 81, 16, SLOT_AVAILABLE, 0},
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////
 /*class Chest
 {
   public:
-    uint16_t x;
-    uint16_t y;
+    int x;
+    int y;
+    int w;
+    int h;
     uint8_t itemId;
     bool isOpen;
 };
 
 Chest chests[] =
 {
-  { 304, 464, ITEM_Spice, false }, 
- 
+  { 304, 464, 16, 16, ITEM_Spice, false },
+
 };
 
 class Room
 {
-public:
-  Chest chests[MaxChests];
-  int chestCount;
+  public:
+    Chest chests[MaxChests];
+    int room;
+    int chestCount;
 
-  uint8_t getChestCount() { return chestCount;}
-    Chest[] getChests() { return chests; }
+    uint8_t getChestCount() {
+      return chestCount;
+    }
+    Chest[] getChests() {
+      return chests;
+    }
 
 };
 
-Room rooms[] = 
+Room rooms[] =
 {
-  {1},
-  }; */
+  {player.room, 1},
+};*/
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
 class Chest
-{
+  {
   public:
+    uint16_t w;
+    uint16_t h;
     uint8_t itemId;
     bool isOpen;
-};
+  };
 
-#define NoItem 255
+  #define NoItem 255
 
-Chest chests[] =
-{
-  { ITEM_Spice, false }, 
-  { ITEM_Spice, false },
- 
-};
+  Chest chests[] =
+  {
+  {16, 16, ITEM_Spice, false },
+  {16, 16, ITEM_Spice, false },
 
-
+  };
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -221,26 +231,57 @@ void printInventory() {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 void printItemlist() {
-  Rect rectA {0, 0, 136, 20};
-  Rect rectB {0, 20, 136, 40};
-  Rect rectC {0, 60, 136, 40};
-  Rect rectD {0, 0, 136, 20};
-  Rect rectE {0, 20, 136, 40};
-  Rect rectF {0, 60, 136, 40};
-  Rect rectG {0, 0, 136, 20};
-  Rect rectH {0, 20, 136, 40};
-  Rect rectI {0, 60, 136, 40};
-  Rect rectJ {0, 0, 136, 20};
-  Rect rectK {0, 20, 136, 40};
-  Rect rectL {0, 60, 136, 40};
-  Rect rectM {0, 60, 136, 40};
-  
+  Rect rectA {180, 16, 81, 16};
+  Rect rectB {180, 34, 81, 16};
+  Rect rectC {180, 52, 81, 16};
+  Rect rectD {180, 70, 81, 16};
+  Rect rectE {180, 106, 81, 16};
+  Rect rectF {180, 124, 81, 16};
+  Rect rectG {180, 142, 81, 16};
+  Rect rectH {180, 160, 81, 16};
+  Rect rectI {180, 178, 81, 16};
+  Rect rectJ {180, 196, 81, 16};
+  Rect rectK {180, 214, 81, 16};
+  Rect rectL {cursore.cursorE_x, cursore.cursorE_y, 32, 32,};
+
   tft.fillRoundRect(140, 0, 160, 240, 4, WHITE);
   tft.fillRoundRect(145, 4, 150, 232, 4, BLUE);
   printInventory();
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
+  int y = ss1.analogRead(2);
+  int x = ss1.analogRead(3);
 
+  /// if(tft.Bpressed(BTN_UP)){
+  if (x > 600 && last_x < 600) {
+    tft.writeRectNBPP(cursore.cursorE_x, cursore.cursorE_y, 32, 32, 4, cursor3, palette);
+    cursore.cursor_direction = 1;
+    cursore.cursorE_y -= 18;
+  }
+  if (cursore.cursorE_y <= 14) {
+    cursore.cursorE_y = 14;
+  }
 
- 
+  //////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////Down///////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  /// if(tft.Bpressed(BTN_DOWN)){
+  if (x < 400 && last_x > 400) {
+    tft.writeRectNBPP(cursore.cursorE_x, cursore.cursorE_y, 32, 32, 4, cursor3, palette);
+    cursore.cursor_direction = 1;
+    cursore.cursorE_y += 18;
+  }
+  if (cursore.cursorE_y >= 214) {
+    cursore.cursorE_y = 214;
+  }
+
+  last_x = x;
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  if (cursore.cursor_direction == 1) {
+    tft.writeRectNBPP(cursore.cursorE_x, cursore.cursorE_y, 32, 32, 4, cursor3, palette);
+  }
+
   //////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////
   if (!digitalRead(IRQ_PIN2)) {
@@ -250,6 +291,165 @@ void printItemlist() {
     }
     //////////////////////////////////////////////////////////////////////////////////////////
     //////////////////////////////////////////////////////////////////////////////////////////
+          if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectA.x, rectA.y, rectA.width, rectA.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectB.x, rectB.y, rectB.width, rectB.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(PURPLE); 
+    }
+    else if ((! (buttons & (1 << BUTTON_X))  && tft.collideRectRect( rectC.x, rectC.y, rectC.width, rectC.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectD.x, rectD.y, rectD.width, rectD.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(RED);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectE.x, rectE.y, rectE.width, rectE.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(YELLOW);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectF.x, rectF.y, rectF.width, rectF.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(WHITE);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectG.x, rectG.y, rectG.width, rectG.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectH.x, rectH.y, rectH.width, rectH.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(RED);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectI.x, rectI.y, rectI.width, rectI.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(YELLOW);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectJ.x, rectJ.y, rectJ.width, rectJ.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(WHITE);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectK.x, rectK.y, rectK.width, rectK.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
   }
 }
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+void ItemlistBat() {
+  Rect rectA {180, 16, 81, 16};
+  Rect rectB {180, 34, 81, 16};
+  Rect rectC {180, 52, 81, 16};
+  Rect rectD {180, 70, 81, 16};
+  Rect rectE {180, 106, 81, 16};
+  Rect rectF {180, 124, 81, 16};
+  Rect rectG {180, 142, 81, 16};
+  Rect rectH {180, 160, 81, 16};
+  Rect rectI {180, 178, 81, 16};
+  Rect rectJ {180, 196, 81, 16};
+  Rect rectK {180, 214, 81, 16};
+  Rect rectL {cursore.cursorE_x, cursore.cursorE_y, 32, 32,};
+
+  tft.fillRoundRect(140, 0, 160, 240, 4, WHITE);
+  tft.fillRoundRect(145, 4, 150, 232, 4, BLUE);
+  printInventory();
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
+  int y = ss1.analogRead(2);
+  int x = ss1.analogRead(3);
+
+  /// if(tft.Bpressed(BTN_UP)){
+  if (x > 600 && last_x < 600) {
+    tft.writeRectNBPP(cursore.cursorE_x, cursore.cursorE_y, 32, 32, 4, cursor3, palette);
+    cursore.cursor_direction = 1;
+    cursore.cursorE_y -= 18;
+  }
+  if (cursore.cursorE_y <= 14) {
+    cursore.cursorE_y = 14;
+  }
+
+  //////////////////////////////////////////////////////////////////////////////
+  ///////////////////////////////Down///////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////
+  /// if(tft.Bpressed(BTN_DOWN)){
+  if (x < 400 && last_x > 400) {
+    tft.writeRectNBPP(cursore.cursorE_x, cursore.cursorE_y, 32, 32, 4, cursor3, palette);
+    cursore.cursor_direction = 1;
+    cursore.cursorE_y += 18;
+  }
+  if (cursore.cursorE_y >= 214) {
+    cursore.cursorE_y = 214;
+  }
+
+  last_x = x;
+  /////////////////////////////////////////////////////////////////////////////////////////
+  /////////////////////////////////////////////////////////////////////////////////////////
+  if (cursore.cursor_direction == 1) {
+    tft.writeRectNBPP(cursore.cursorE_x, cursore.cursorE_y, 32, 32, 4, cursor3, palette);
+  }
+
+  //////////////////////////////////////////////////////////////////////////////////////////
+  //////////////////////////////////////////////////////////////////////////////////////////
+  if (!digitalRead(IRQ_PIN2)) {
+    uint32_t buttons = ss2.digitalReadBulk(button_mask2);
+    if (! (buttons & (1 << BUTTON_A))) {
+      state = STATE_Battle;
+    }
+    //////////////////////////////////////////////////////////////////////////////////////////
+    //////////////////////////////////////////////////////////////////////////////////////////
+          if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectA.x, rectA.y, rectA.width, rectA.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectB.x, rectB.y, rectB.width, rectB.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(PURPLE); 
+    }
+    else if ((! (buttons & (1 << BUTTON_X))  && tft.collideRectRect( rectC.x, rectC.y, rectC.width, rectC.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectD.x, rectD.y, rectD.width, rectD.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(RED);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectE.x, rectE.y, rectE.width, rectE.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(YELLOW);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectF.x, rectF.y, rectF.width, rectF.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(WHITE);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectG.x, rectG.y, rectG.width, rectG.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectH.x, rectH.y, rectH.width, rectH.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(RED);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectI.x, rectI.y, rectI.width, rectI.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(YELLOW);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectJ.x, rectJ.y, rectJ.width, rectJ.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(WHITE);
+    }
+    else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectK.x, rectK.y, rectK.width, rectK.height, rectL.x, rectL.y, rectL.width, rectL.height)))
+    {
+      tft.fillScreen(GREEN);
+    }
+  }
+}
+
+
+
+
 #endif
