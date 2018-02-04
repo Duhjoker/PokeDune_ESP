@@ -11,13 +11,14 @@
 #define ITEM_Abba           7
 #define ITEM_Stillsuit      8
 #define ITEM_Fremkit        9
-#define ITEM_NoItem         a
 
+#define NoItem              255
+#define MaxChests           4
 
 #define MAX_ITEM            10
 #define SLOT_AVAILABLE      255
 #define NO_SLOT_AVAILABLE   254
-#define NUMBER_OF_SLOTS     10
+#define NUMBER_OF_SLOTS     12
 
 struct Slot {
   int slot_x;
@@ -29,23 +30,70 @@ struct Slot {
 };
 
 Slot slots[NUMBER_OF_SLOTS] = {
-  { 200, 48,  81, 16, SLOT_AVAILABLE},
-  { 200, 66,  81, 16, SLOT_AVAILABLE},
-  { 200, 84,  81, 16, SLOT_AVAILABLE},
-  { 200, 102, 81, 16, SLOT_AVAILABLE},
-  { 200, 112, 81, 16, SLOT_AVAILABLE},
-  { 200, 120, 81, 16, SLOT_AVAILABLE},
-  { 200, 138, 81, 16, SLOT_AVAILABLE},
-  { 200, 156, 81, 16, SLOT_AVAILABLE},
-  { 200, 174, 81, 16, SLOT_AVAILABLE},
-  { 200, 192, 81, 16, SLOT_AVAILABLE},
+  { 180, 24,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 42,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 60,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 78,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 96,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 114, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 132, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 150, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 168, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 186, 81, 16, SLOT_AVAILABLE, 0}, 
+  { 180, 204, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 222, 81, 16, SLOT_AVAILABLE, 0},
 };
-
-struct Chest
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+/*class Chest
 {
-    int itemId;
+  public:
+    uint16_t x;
+    uint16_t y;
+    uint8_t itemId;
     bool isOpen;
 };
+
+Chest chests[] =
+{
+  { 304, 464, ITEM_Spice, false }, 
+ 
+};
+
+class Room
+{
+public:
+  Chest chests[MaxChests];
+  int chestCount;
+
+  uint8_t getChestCount() { return chestCount;}
+    Chest[] getChests() { return chests; }
+
+};
+
+Room rooms[] = 
+{
+  {1},
+  }; */
+///////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////
+class Chest
+{
+  public:
+    uint8_t itemId;
+    bool isOpen;
+};
+
+#define NoItem 255
+
+Chest chests[] =
+{
+  { ITEM_Spice, false }, 
+  { ITEM_Spice, false },
+ 
+};
+
+
 
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
@@ -173,30 +221,26 @@ void printInventory() {
 ////////////////////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////////////
 void printItemlist() {
-  tft.writeRectNBPP(0, 0, 136, 20, 4, menul1, palette);
-  tft.writeRectNBPP(0, 20, 136, 40, 4, menul2, palette);
-  tft.writeRectNBPP(0, 60, 136, 40, 4, menul3, palette);
-  tft.writeRectNBPP(0, 100, 136, 40, 4, menul4, palette);
-  tft.writeRectNBPP(0, 140, 136, 40, 4, menul5, palette);
-  tft.writeRectNBPP(0, 180, 136, 40, 4, menul6, palette);
-  tft.writeRectNBPP(0, 220, 136, 20, 4, menul7, palette);
-  tft.writeRectNBPP(136, 0, 184, 26, 4, menur1, palette);
-  tft.writeRectNBPP(136, 26, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 42, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 58, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 74, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 90, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 106, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 122, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 138, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 154, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 170, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 186, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 202, 184, 16, 4, menur2, palette);
-  tft.writeRectNBPP(136, 218, 184, 22, 4, menur3, palette);
-  //////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////
+  Rect rectA {0, 0, 136, 20};
+  Rect rectB {0, 20, 136, 40};
+  Rect rectC {0, 60, 136, 40};
+  Rect rectD {0, 0, 136, 20};
+  Rect rectE {0, 20, 136, 40};
+  Rect rectF {0, 60, 136, 40};
+  Rect rectG {0, 0, 136, 20};
+  Rect rectH {0, 20, 136, 40};
+  Rect rectI {0, 60, 136, 40};
+  Rect rectJ {0, 0, 136, 20};
+  Rect rectK {0, 20, 136, 40};
+  Rect rectL {0, 60, 136, 40};
+  Rect rectM {0, 60, 136, 40};
+  
+  tft.fillRoundRect(140, 0, 160, 240, 4, WHITE);
+  tft.fillRoundRect(145, 4, 150, 232, 4, BLUE);
   printInventory();
+
+
+ 
   //////////////////////////////////////////////////////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////////////////
   if (!digitalRead(IRQ_PIN2)) {

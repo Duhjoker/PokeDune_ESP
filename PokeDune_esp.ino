@@ -93,18 +93,24 @@ void loop() {
         uint32_t buttons = ss1.digitalReadBulk(button_mask);
         if (! (buttons & (1 << BUTTON_SEL))) {
           Serial.println("Button SEL pressed");
-          state = STATE_Player;
+          state = STATE_Game_select;
 
         }
       }
       break;
 
+    case STATE_Game_select:
+      loadgame();
+      break;
+
     case STATE_Player:
+      tft.fillScreen(BLACK);
       drawplayer();
       //      triggerBattle(player.player_x, player.player_y);
       break;
 
     case STATE_Menu:
+      tft.fillScreen(BLACK);
       Menu();
       break;
 
@@ -116,13 +122,14 @@ void loop() {
       drawBattle();
       break;
 
-    case STATE_Item_list_bat
-        ItemlistBat();
+    case STATE_Item_list_bat:
+      ItemlistBat();
       break;
   }
   tft.updateScreen();
 
 }
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////PROGRESS//////////////////////////////////////////////////////////////////////

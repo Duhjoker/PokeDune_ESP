@@ -240,7 +240,7 @@ void drawplayer() {
   ///////////////////////////////////////////////////////////////////////////////
   int y = ss1.analogRead(2);
   int x = ss1.analogRead(3);
-#define MoveRepeatRate 50 // set this for how long in milis to wait for auto repeat move
+  #define MoveRepeatRate 50 // set this for how long in milis to wait for auto repeat move
 
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -625,21 +625,45 @@ bool checkcolision(void) // Transformed it into a function
         Serial.println("Added a Spice into slot 0");
 
         return true;
-      }*/
+        }*/
 
       else if ((tft.solid[i].spritecol == chest1) && player.room == 3) {
-        if (!Chest.isOpen)
+        if (!chests[i].isOpen)
         {
-          bool success = addItemToInventory(ITEM_Spice);
-          if (success)
+          if (chests[i].itemId != NoItem)
           {
-            tft.Popup(F(" ""Chest is empty."" "), 2, 75, 20);
-            Chest.isOpen = true;
-            Chest.itemId = NoItem;
+            bool success = addItemToInventory(ITEM_Spice);
+            tft.Popup(F(" You Got Spice. "), 2, 75, 20);
+            if (success)
+            {
+              chests[i].isOpen = true;
+              chests[i].itemId = NoItem;
+            }
           }
         }
         return true;
       }
+
+      /*          else if (tft.solid[i].spritecol == chest1)
+
+                  for (int i = 0; i < player.room.getChestCount(); ++i)
+                  {
+                    Chest & chest = player.room.getChest(i);
+                    if (chest.x == player.player_x && chest.y == player.player_y)
+                    {
+                      if (!chest.isOpen)
+                      {
+                        bool success = addItemToInventory(ITEM_Spice);
+                        if (success)
+                        {
+                          tft.Popup(F(" ""Chest is empty."" "), 2, 75, 20);
+                          chest.isOpen = true;
+                          chest.itemId = NoItem;
+                        }
+                      }
+                    }
+                  }
+      */
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////

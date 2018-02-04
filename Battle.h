@@ -36,20 +36,20 @@ void drawBattle() {
   Rect rectD {24, 164, 22, 7};
   Rect rectE {24, 190, 47, 7};
   Rect rectF {24, 216, 23, 7};
-  Rect rectG {cursorb.cursorB_x, cursorb.cursorB_y, 16, 16};
+  Rect rectG {cursorb.cursorB_x, cursorb.cursorB_y, 32, 32};
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////////////////////////////////////////////////////////////////////////////////
   tft.fillScreen(BLACK);
   tft.fillRect(0, 30, 320, 50, WHITE);  ////// draws a back grounds stripe for the monsters to sit on the length nof the screen
   tft.writeRectNBPP(143, 50, 34, 24, 4, cavespider, palette);
   tft.drawRoundRect(40, 82, 240, 40, 4, WHITE);
-  tft.fillRoundRect(41, 83, 237, 37, 4, BLUE);
+  tft.fillRoundRect(41, 83, 237, 36, 4, BLUE);
   tft.setCursor(90, 94);
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
   tft.println("Cave spider");
-  tft.drawRoundRect(10, 130, 118, 104, 4, WHITE);
-  tft.fillRoundRect(11, 131, 115, 101, 4, BLUE);
+  tft.fillRoundRect(10, 130, 119, 106, 4, WHITE);
+  tft.fillRoundRect(14, 133, 111, 100, 4, BLUE);
   tft.setCursor(24, 138);
   tft.setTextColor(WHITE);
   tft.setTextSize(2);
@@ -74,7 +74,7 @@ void drawBattle() {
   ////////////////////////////Up/////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////
   if (x1 > 600 && last_x < 600) {
-    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 16, 16, 4, cursordot2, palette);
+    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 32, 32, 4, cursor3, palette);
     cursorb.cursorB_y -= 26;
   }
   if (cursorb.cursorB_y <= 136) {
@@ -85,7 +85,7 @@ void drawBattle() {
   ///////////////////////////////Down///////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
   if (x1 < 400 && last_x > 400) {
-    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 16, 16, 4, cursordot2, palette);
+    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 32, 32, 4, cursor3, palette);
     cursorb.cursorB_y += 26;
   }
   if (cursorb.cursorB_y >= 240) {
@@ -96,7 +96,7 @@ void drawBattle() {
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   if (cursorb.cursorB_direction == 1) {
-    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 16, 16, 4, cursordot2, palette);
+    tft.writeRectNBPP(cursorb.cursorB_x, cursorb.cursorB_y, 32, 32, 4, cursor3, palette);
   }
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -111,7 +111,7 @@ void drawBattle() {
     }
     else  if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectD.x, rectD.y, rectD.width, rectD.height, rectG.x, rectG.y, rectG.width, rectG.height)))
     {
-      STATE = STATE_Item_list_bat;
+      state = STATE_Item_list_bat;
     }
     else  if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectE.x, rectE.y, rectE.width, rectE.height, rectG.x, rectG.y, rectG.width, rectG.height)))
     {
@@ -128,14 +128,15 @@ void drawBattle() {
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////
 void ItemlistBat() {
-  tft.drawRoundRect(136, 130, 184, 104, 4, WHITE);
-  tft.fillRoundRect(136, 131, 184, 101, 4, BLUE);
+  tft.fillRoundRect(140, 0, 160, 240, 4, WHITE);
+  tft.fillRoundRect(145, 4, 150, 232, 4, BLUE);
+  printInventory();
   if (!digitalRead(IRQ_PIN2)) {
     uint32_t buttons = ss2.digitalReadBulk(button_mask2);
     if (! (buttons & (1 << BUTTON_A))) {
       state = STATE_Battle;
     }
   }
-
+}
 
 #endif
