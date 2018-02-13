@@ -1,10 +1,10 @@
 #ifndef _Player_H_
 #define _Player_H_
 
-#include "world.h"
 #include "Variables.h"
 #include "Inventory.h"
 #include "Battle.h"
+#include "Bitmaps.h"
 
 elapsedMillis MoveRepeat;
 
@@ -15,45 +15,45 @@ bool checkcolision(void);
 ///////////////////////////////////////////////////////////////////////////////
 void drawplayer() {
 
-  if (random(0, 100) == 0) {
-    state = STATE_Battle;
-  }
+  //if (random(0, 100) == 0) {
+  //  state = STATE_Battle;
+ // }
   ///////////////////////////////////////////////////////////////////////////////
   ////////////////////////////////camera controls////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////
   // Clamp cameraX
-  if (cameraX < cameraXMin)
+  if (player.cameraX < cameraXMin)
   {
-    cameraX = cameraXMin;
+    player.cameraX = cameraXMin;
   }
-  else if (cameraX > cameraXMax)
+  else if (player.cameraX > cameraXMax)
   {
-    cameraX = cameraXMax;
+    player.cameraX = cameraXMax;
   }
 
   // Clamp cameraY
-  if (cameraY < cameraYMin)
+  if (player.cameraY < cameraYMin)
   {
-    cameraY = cameraYMin;
+    player.cameraY = cameraYMin;
   }
-  else if (cameraY > cameraYMax)
+  else if (player.cameraY > cameraYMax)
   {
-    cameraY = cameraYMax;
+    player.cameraY = cameraYMax;
   }
 
   // Check if player is beyond X boundary
   if (player.player_x < playerXMin)
   {
-    cameraX += cameraXSpeed;
-    if (cameraX > cameraXMin && cameraX < cameraXMax)
+    player.cameraX += cameraXSpeed;
+    if (player.cameraX > cameraXMin && player.cameraX < cameraXMax)
     {
       player.player_x = playerXMin;
     }
   }
   else if (player.player_x > playerXMax)
   {
-    cameraX -= cameraXSpeed;
-    if (cameraX > cameraXMin && cameraX < cameraXMax)
+    player.cameraX -= cameraXSpeed;
+    if (player.cameraX > cameraXMin && player.cameraX < cameraXMax)
     {
       player.player_x = playerXMax;
     }
@@ -62,16 +62,16 @@ void drawplayer() {
   // Check if player is beyond Y boundary
   if (player.player_y < playerYMin)
   {
-    cameraY += cameraYSpeed;
-    if (cameraY > cameraYMin && cameraY < cameraYMax)
+    player.cameraY += cameraYSpeed;
+    if (player.cameraY > cameraYMin && player.cameraY < cameraYMax)
     {
       player.player_y = playerYMin;
     }
   }
   else if (player.player_y > playerYMax)
   {
-    cameraY -= cameraYSpeed;
-    if (cameraY > cameraYMin && cameraY < cameraYMax)
+    player.cameraY -= cameraYSpeed;
+    if (player.cameraY > cameraYMin && player.cameraY < cameraYMax)
     {
       player.player_y = playerYMax;
     }
@@ -79,161 +79,157 @@ void drawplayer() {
   //////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////Palette////////////////////////////////////////
   //////////////////////////////////////////////////////////////////////////////
-  palette[0] = 0;
-  palette[1] = BLACK;
-  palette[2] = BLUE;
-  palette[3] = BROWN;
-  palette[4] = DARKGREEN;
-  palette[5] = GREY;
-  palette[6] = PINK;
-  palette[7] = RED;
-  //////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////
-  palette[8] = BEIGE;
-  palette[9] = GREEN;
-  palette[a] = DARKGREY;
-  palette[b] = LIGHTGREY;
-  palette[c] = YELLOW;
-  palette[d] = PURPLE;
-  palette[e] = WHITE;
-  palette[f] = ORANGE;
+  palette[0] = 0;            palette[8] = BEIGE;
+  palette[1] = BLACK;        palette[9] = GREEN;
+  palette[2] = BLUE;         palette[a] = DARKGREY;
+  palette[3] = BROWN;        palette[b] = LIGHTGREY;
+  palette[4] = DARKGREEN;    palette[c] = YELLOW;
+  palette[5] = GREY;         palette[d] = PURPLE;
+  palette[6] = PINK;         palette[e] = WHITE;
+  palette[7] = RED;          palette[f] = ORANGE;
   ///////////////////////////////////////////////////////////////////////////////
   ///////////////////////////////Tilemap/////////////////////////////////////////
   ///////////////////////////////////////////////////////////////////////////////
   if (player.room == 1) {
-    tft.drawTilemap(cameraX, cameraY, imperialbasin, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, imperialbasin, spritesheet, palette);
   }
   else if (player.room == 2) {
-    tft.drawTilemap(cameraX, cameraY, dungeon1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, dungeon1, spritesheet, palette);
   }
   else if (player.room == 3) {
-    tft.drawTilemap(cameraX, cameraY, arakeen, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen, spritesheet, palette);
   }
   else if (player.room == 4) {
-    tft.drawTilemap(cameraX, cameraY, arakeen1l1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen1l1, spritesheet, palette);
   }
   else if (player.room == 5) {
-    tft.drawTilemap(cameraX, cameraY, arakeen1l2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen1l2, spritesheet, palette);
   }
   else if (player.room == 6) {
-    tft.drawTilemap(cameraX, cameraY, arakeen2l1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen2l1, spritesheet, palette);
   }
   else if (player.room == 7) {
-    tft.drawTilemap(cameraX, cameraY, arakeen2l2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen2l2, spritesheet, palette);
   }
   else if (player.room == 8) {
-    tft.drawTilemap(cameraX, cameraY, arakeen2l3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen2l3, spritesheet, palette);
   }
   else if (player.room == 9) {
-    tft.drawTilemap(cameraX, cameraY, arakeen3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen3, spritesheet, palette);
   }
   else if (player.room == 10) {
-    tft.drawTilemap(cameraX, cameraY, arakeen4l1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen4l1, spritesheet, palette);
   }
   else if (player.room == 11) {
-    tft.drawTilemap(cameraX, cameraY, arakeen4l2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen4l2, spritesheet, palette);
   }
   else if (player.room == 12) {
-    tft.drawTilemap(cameraX, cameraY, arakeen4l3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen4l3, spritesheet, palette);
   }
   else if (player.room == 13) {
-    tft.drawTilemap(cameraX, cameraY, arakeen5l1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen5l1, spritesheet, palette);
   }
   else if (player.room == 14) {
-    tft.drawTilemap(cameraX, cameraY, arakeen5b1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen5b1, spritesheet, palette);
   }
   else if (player.room == 15) {
-    tft.drawTilemap(cameraX, cameraY, arakeen5b2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen5b2, spritesheet, palette);
   }
   else if (player.room == 16) {
-    tft.drawTilemap(cameraX, cameraY, arakeen5l2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen5l2, spritesheet, palette);
   }
   else if (player.room == 17) {
-    tft.drawTilemap(cameraX, cameraY, arakeen5l3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen5l3, spritesheet, palette);
   }
   else if (player.room == 18) {
-    tft.drawTilemap(cameraX, cameraY, arakeen6l1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen5escl2, spritesheet, palette);
   }
   else if (player.room == 19) {
-    tft.drawTilemap(cameraX, cameraY, arakeen6l2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen5escl1, spritesheet, palette);
   }
   else if (player.room == 20) {
-    tft.drawTilemap(cameraX, cameraY, arakeen7, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen6l1, spritesheet, palette);
   }
   else if (player.room == 21) {
-    tft.drawTilemap(cameraX, cameraY, arakeen8, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen6l2, spritesheet, palette);
   }
   else if (player.room == 22) {
-    tft.drawTilemap(cameraX, cameraY, arakeen9, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen7, spritesheet, palette);
   }
   else if (player.room == 23) {
-    tft.drawTilemap(cameraX, cameraY, arakeen10, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen8, spritesheet, palette);
   }
   else if (player.room == 24) {
-    tft.drawTilemap(cameraX, cameraY, dungeon2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen9, spritesheet, palette);
   }
   else if (player.room == 25) {
-    tft.drawTilemap(cameraX, cameraY, village2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, arakeen10, spritesheet, palette);
   }
   else if (player.room == 26) {
-    tft.drawTilemap(cameraX, cameraY, village2r1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, dungeon2, spritesheet, palette);
   }
   else if (player.room == 27) {
-    tft.drawTilemap(cameraX, cameraY, village2r2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2, spritesheet, palette);
   }
   else if (player.room == 28) {
-    tft.drawTilemap(cameraX, cameraY, village2r3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r1, spritesheet, palette);
   }
   else if (player.room == 29) {
-    tft.drawTilemap(cameraX, cameraY, village2r4, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r2, spritesheet, palette);
   }
   else if (player.room == 30) {
-    tft.drawTilemap(cameraX, cameraY, village2r5, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r3, spritesheet, palette);
   }
   else if (player.room == 31) {
-    tft.drawTilemap(cameraX, cameraY, village2r6, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r4, spritesheet, palette);
   }
   else if (player.room == 32) {
-    tft.drawTilemap(cameraX, cameraY, village2r7, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r5, spritesheet, palette);
   }
   else if (player.room == 33) {
-    tft.drawTilemap(cameraX, cameraY, village2r8l1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r6, spritesheet, palette);
   }
   else if (player.room == 34) {
-    tft.drawTilemap(cameraX, cameraY, village2r8l2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r7, spritesheet, palette);
   }
   else if (player.room == 35) {
-    tft.drawTilemap(cameraX, cameraY, dungeon3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r8l1, spritesheet, palette);
   }
   else if (player.room == 36) {
-    tft.drawTilemap(cameraX, cameraY, village3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village2r8l2, spritesheet, palette);
   }
   else if (player.room == 37) {
-    tft.drawTilemap(cameraX, cameraY, village3r1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, dungeon3, spritesheet, palette);
   }
   else if (player.room == 38) {
-    tft.drawTilemap(cameraX, cameraY, village3r2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3, spritesheet, palette);
   }
   else if (player.room == 39) {
-    tft.drawTilemap(cameraX, cameraY, village3r3, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3r1, spritesheet, palette);
   }
   else if (player.room == 40) {
-    tft.drawTilemap(cameraX, cameraY, village3r4, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3r2, spritesheet, palette);
   }
   else if (player.room == 41) {
-    tft.drawTilemap(cameraX, cameraY, village3r5, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3r3, spritesheet, palette);
   }
   else if (player.room == 42) {
-    tft.drawTilemap(cameraX, cameraY, village3r6l1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3r4, spritesheet, palette);
   }
   else if (player.room == 43) {
-    tft.drawTilemap(cameraX, cameraY, village3r6l2, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3r5, spritesheet, palette);
   }
   else if (player.room == 44) {
-    tft.drawTilemap(cameraX, cameraY, dungeon4, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3r6l1, spritesheet, palette);
   }
   else if (player.room == 45) {
-    tft.drawTilemap(cameraX, cameraY, desertp1, spritesheet, palette);
+    tft.drawTilemap(player.cameraX, player.cameraY, village3r6l2, spritesheet, palette);
+  }
+  else if (player.room == 46) {
+    tft.drawTilemap(player.cameraX, player.cameraY, dungeon4, spritesheet, palette);
+  }
+  else if (player.room == 47) {
+    tft.drawTilemap(player.cameraX, player.cameraY, desertp1, spritesheet, palette);
   }
 
   ///////////////////////////////////////////////////////////////////////////////
@@ -558,8 +554,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 2;
         player.player_x = 128;
         player.player_y = 140;
-        cameraX = -0;
-        cameraY = -704;
+        player.cameraX = -0;
+        player.cameraY = -704;
         cameraXMin = -0;
         cameraYMin = -704;
       }
@@ -567,8 +563,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 1;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -416;
-        cameraY = -368;
+        player.cameraX = -416;
+        player.cameraY = -368;
         cameraXMin = -960;
         cameraYMin = -1024;
       }
@@ -576,8 +572,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 3;
         player.player_x = 144;
         player.player_y = 170;
-        cameraX = -128;
-        cameraY = -254;
+        player.cameraX = -128;
+        player.cameraY = -254;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -585,8 +581,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 2;
         player.player_x = 80;
         player.player_y = 112;
-        cameraX = -0;
-        cameraY = -0;
+        player.cameraX = -0;
+        player.cameraY = -0;
         cameraXMin = -0;
         cameraYMin = -704;
       }
@@ -619,14 +615,6 @@ bool checkcolision(void) // Transformed it into a function
         return true;
       }
 
-      /*else if ((tft.solid[i].spritecol == chest) && player.room == 3) {
-        tft.Popup(F(" ""You got Spice"" "), 2, 75, 20);
-        added = addItemToInventory(ITEM_Spice);
-        Serial.println("Added a Spice into slot 0");
-
-        return true;
-        }*/
-
       else if ((tft.solid[i].spritecol == chest1) && player.room == 3) {
         if (!chests[i].isOpen)
         {
@@ -634,6 +622,25 @@ bool checkcolision(void) // Transformed it into a function
           {
             bool success = addItemToInventory(ITEM_Spice);
             tft.Popup(F(" You Got Spice. "), 2, 75, 20);
+            Serial.println(i);
+            if (success)
+            {
+              chests[i].isOpen = true;
+              chests[i].itemId = NoItem;
+            }
+          }
+        }
+        return true;
+        }
+  
+      else if ((tft.solid[i].spritecol == chest2) && player.room == 3) {
+        if (!chests[i].isOpen)
+        {
+          if (chests[i].itemId != NoItem)
+          {
+            bool success = addItemToInventory(ITEM_Spice);
+            tft.Popup(F(" You Got Spice. "), 2, 75, 20);
+            Serial.println(i);
             if (success)
             {
               chests[i].isOpen = true;
@@ -644,28 +651,7 @@ bool checkcolision(void) // Transformed it into a function
         return true;
         }
 
-     /* else if (tft.solid[i].spritecol == chest1)
-      {
-        for (int j = 0; j < rooms[i].getChestCount(); ++j)
-        {
-          Chest & chest = rooms[i].getChest(j);
-          if ((chest.x / chest.w) == (player.player_x / player.w) && (chest.y / chest.h) == (player.player_y / player.h))
-          {
-            if (!chest.isOpen)
-            {
-              bool success = addItemToInventory(ITEM_Spice);
-              if (success)
-              {
-                tft.Popup(F(" ""Chest is empty."" "), 2, 75, 20);
-                chest.isOpen = true;
-                chest.itemId = NoItem;
-              }
-            }
-          }
-        }
-        return true;
-      }
-*/
+    
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -675,8 +661,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 4;
         player.player_x = 124;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -80;
         cameraYMin = -144;
       }
@@ -684,8 +670,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 3;
         player.player_x = 128;
         player.player_y = 178;
-        cameraX = -0;
-        cameraY = -368;
+        player.cameraX = -0;
+        player.cameraY = -368;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -693,8 +679,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 5;
         player.player_x = 256;
         player.player_y = 96;
-        cameraX = -800;
-        cameraY = -0;
+        player.cameraX = -800;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -144;
       }
@@ -702,8 +688,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 4;
         player.player_x = 256;
         player.player_y = 112;
-        cameraX = -80;
-        cameraY = -0;
+        player.cameraX = -80;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -144;
       }
@@ -745,8 +731,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 6;
         player.player_x = 132;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -304;
+        player.cameraX = -0;
+        player.cameraY = -304;
         cameraXMin = -80;
         cameraYMin = -304;
       }
@@ -754,8 +740,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 3;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -144;
-        cameraY = -416;
+        player.cameraX = -144;
+        player.cameraY = -416;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -763,8 +749,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 7;
         player.player_x = 52;
         player.player_y = 100;
-        cameraX = -0;
-        cameraY = -0;
+        player.cameraX = -0;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -304;
       }
@@ -772,8 +758,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 6;
         player.player_x = 52;
         player.player_y = 100;
-        cameraX = -0;
-        cameraY = -0;
+        player.cameraX = -0;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -304;
       }
@@ -781,8 +767,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 8;
         player.player_x = 52;
         player.player_y = 96;
-        cameraX = -0;
-        cameraY = -0;
+        player.cameraX = -0;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -304;
       }
@@ -790,8 +776,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 7;
         player.player_x = 52;
         player.player_y = 186;
-        cameraX = -0;
-        cameraY = -304;
+        player.cameraX = -0;
+        player.cameraY = -304;
         cameraXMin = -80;
         cameraYMin = -304;
       }
@@ -878,8 +864,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 9;
         player.player_x = 128;
         player.player_y = 204;
-        cameraX = -128;
-        cameraY = -224;
+        player.cameraX = -128;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
@@ -887,8 +873,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 3;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -336;
-        cameraY = -384;
+        player.cameraX = -336;
+        player.cameraY = -384;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -934,8 +920,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 10;
         player.player_x = 78;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -224;
+        player.cameraX = -0;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
@@ -943,8 +929,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 3;
         player.player_x = 98;
         player.player_y = 158;
-        cameraX = -0;
-        cameraY = -176;
+        player.cameraX = -0;
+        player.cameraY = -176;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -952,8 +938,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 11;
         player.player_x = 254;
         player.player_y = 114;
-        cameraX = -160;
-        cameraY = -0;
+        player.cameraX = -160;
+        player.cameraY = -0;
         cameraXMin = -160;
         cameraYMin = -224;
       }
@@ -961,8 +947,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 10;
         player.player_x = 254;
         player.player_y = 188;
-        cameraX = -160;
-        cameraY = -224;
+        player.cameraX = -160;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
@@ -970,8 +956,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 12;
         player.player_x = 254;
         player.player_y = 112;
-        cameraX = -160;
-        cameraY = -0;
+        player.cameraX = -160;
+        player.cameraY = -0;
         cameraXMin = -160;
         cameraYMin = -224;
       }
@@ -979,8 +965,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 11;
         player.player_x = 242;
         player.player_y = 186;
-        cameraX = -160;
-        cameraY = -224;
+        player.cameraX = -160;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
@@ -1036,8 +1022,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 13;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -240;
-        cameraY = -704;
+        player.cameraX = -240;
+        player.cameraY = -704;
         cameraXMin = -480;
         cameraYMin = -704;
       }
@@ -1045,8 +1031,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 3;
         player.player_x = 160;
         player.player_y = 144;
-        cameraX = -128;
-        cameraY = -160;
+        player.cameraX = -128;
+        player.cameraY = -160;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -1054,8 +1040,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 14;
         player.player_x = 52;
         player.player_y = 114;
-        cameraX = -0;
-        cameraY = -0;
+        player.cameraX = -0;
+        player.cameraY = -0;
         cameraXMin = -480;
         cameraYMin = -64;
       }
@@ -1063,8 +1049,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 13;
         player.player_x = 52;
         player.player_y = 160;
-        cameraX = -0;
-        cameraY = -256;
+        player.cameraX = -0;
+        player.cameraY = -256;
         cameraXMin = -480;
         cameraYMin = -704;
       }
@@ -1072,8 +1058,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 13;
         player.player_x = 254;
         player.player_y = 160;
-        cameraX = -480;
-        cameraY = -256;
+        player.cameraX = -480;
+        player.cameraY = -256;
         cameraXMin = -480;
         cameraYMin = -704;
       }
@@ -1081,8 +1067,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 14;
         player.player_x = 252;
         player.player_y = 114;
-        cameraX = -480;
-        cameraY = -0;
+        player.cameraX = -480;
+        player.cameraY = -0;
         cameraXMin = -480;
         cameraYMin = -64;
       }
@@ -1090,8 +1076,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 15;
         player.player_x = 252;
         player.player_y = 188;
-        cameraX = -80;
-        cameraY = -144;
+        player.cameraX = -80;
+        player.cameraY = -144;
         cameraXMin = -80;
         cameraYMin = -144;
       }
@@ -1099,8 +1085,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 13;
         player.player_x = 128;
         player.player_y = 98;
-        cameraX = -240;
-        cameraY = -0;
+        player.cameraX = -240;
+        player.cameraY = -0;
         cameraXMin = -480;
         cameraYMin = -704;
       }
@@ -1108,8 +1094,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 16;
         player.player_x = 174;
         player.player_y = 98;
-        cameraX = -240;
-        cameraY = -0;
+        player.cameraX = -240;
+        player.cameraY = -0;
         cameraXMin = -480;
         cameraYMin = -544;
       }
@@ -1117,8 +1103,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 13;
         player.player_x = 174;
         player.player_y = 98;
-        cameraX = -240;
-        cameraY = -0;
+        player.cameraX = -240;
+        player.cameraY = -0;
         cameraXMin = -480;
         cameraYMin = -704;
       }
@@ -1126,8 +1112,8 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 17;
         player.player_x = 144;
         player.player_y = 100;
-        cameraX = -96;
-        cameraY = -0;
+        player.cameraX = -96;
+        player.cameraY = -0;
         cameraXMin = -160;
         cameraYMin = -224;
       }
@@ -1135,47 +1121,109 @@ bool checkcolision(void) // Transformed it into a function
         player.room = 16;
         player.player_x = 130;
         player.player_y = 100;
-        cameraX = -240;
-        cameraY = -0;
+        player.cameraX = -240;
+        player.cameraY = -0;
         cameraXMin = -480;
         cameraYMin = -704;
+      }
+
+      ////////////////////////////////////////////////////////////////////////////////////////////
+      ////////////////////////////////////////////////////////////////////////////////////////////
+      else if ((tft.solid[i].spritecol == cave1) && player.room == 14) {
+        player.room = 18;
+        player.player_x = 144;
+        player.player_y = 170;
+        player.cameraX = -0;
+        player.cameraY = -64;
+        cameraXMin = -0;
+        cameraYMin = -64;
+      }
+
+      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 18) {
+        player.room = 14;
+        player.player_x = 114;
+        player.player_y = 84;
+        player.cameraX = -432;
+        player.cameraY = -0;
+        cameraXMin = -480;
+        cameraYMin = -704;
+      }
+
+       else if ((tft.solid[i].spritecol == ladderd1) && player.room == 18) {
+        player.room = 19;
+        player.player_x = 144;
+        player.player_y = 116;
+        player.cameraX = -0;
+        player.cameraY = -0;
+        cameraXMin = -0;
+        cameraYMin = -80;
+      }
+
+       else if ((tft.solid[i].spritecol == ladderu1) && player.room == 19) {
+        player.room = 18;
+        player.player_x = 224;
+        player.player_y = 116;
+        player.cameraX = -0;
+        player.cameraY = -0;
+        cameraXMin = -0;
+        cameraYMin = -64;
+      }
+
+      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 19) {
+        player.room = 2;
+        player.player_x = 176;
+        player.player_y = 84;
+        player.cameraX = -0;
+        player.cameraY = -0;
+        cameraXMin = -0;
+        cameraYMin = -704;
+      }
+
+      else if ((tft.solid[i].spritecol == stonecavei1) && player.room == 2) {
+        player.room = 19;
+        player.player_x = 130;
+        player.player_y = 100;
+        player.cameraX = -0;
+        player.cameraY = -0;
+        cameraXMin = -0;
+        cameraYMin = -64;
       }
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// arrakeen player.room 6  school/auction house?
       else if ((tft.solid[i].spritecol == door6) && player.room == 3) {
-        player.room = 18;
+        player.room = 20;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -80;
-        cameraY = -144;
+        player.cameraX = -80;
+        player.cameraY = -144;
         cameraXMin = -160;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 18) {
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 20) {
         player.room = 3;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -240;
-        cameraY = -272;
+        player.cameraX = -240;
+        player.cameraY = -272;
         cameraXMin = -336;
         cameraYMin = -448;
       }
-      else if ((tft.solid[i].spritecol == stairsl1) && player.room == 18) {
-        player.room = 19;
+      else if ((tft.solid[i].spritecol == stairsl1) && player.room == 20) {
+        player.room = 21;
         player.player_x = 240;
         player.player_y = 98;
-        cameraX = -160;
-        cameraY = -0;
+        player.cameraX = -160;
+        player.cameraY = -0;
         cameraXMin = -160;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == stepsl1) && player.room == 19) {
-        player.room = 18;
+      else if ((tft.solid[i].spritecol == stepsl1) && player.room == 21) {
+        player.room = 20;
         player.player_x = 256;
         player.player_y = 98;
-        cameraX = -160;
-        cameraY = -0;
+        player.cameraX = -160;
+        player.cameraY = -0;
         cameraXMin = -160;
         cameraYMin = -144;
       }
@@ -1183,20 +1231,20 @@ bool checkcolision(void) // Transformed it into a function
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// arrakeen player.room 7 comic shop
       else if ((tft.solid[i].spritecol == door7) && player.room == 3) {
-        player.room = 20;
+        player.room = 22;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -96;
-        cameraY = -224;
+        player.cameraX = -96;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 20) {
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 22) {
         player.room = 3;
         player.player_x = 128;
         player.player_y = 156;
-        cameraX = -0;
-        cameraY = -16;
+        player.cameraX = -0;
+        player.cameraY = -16;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -1204,20 +1252,20 @@ bool checkcolision(void) // Transformed it into a function
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// arrakeen player.room 8 grocery store
       else if ((tft.solid[i].spritecol == door8) && player.room == 3) {
-        player.room = 21;
+        player.room = 23;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -32;
-        cameraY = -224;
+        player.cameraX = -32;
+        player.cameraY = -224;
         cameraXMin = -480;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 21) {
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 23) {
         player.room = 3;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -144;
-        cameraY = -0;
+        player.cameraX = -144;
+        player.cameraY = -0;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -1225,20 +1273,20 @@ bool checkcolision(void) // Transformed it into a function
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// arrakeen player.room 9 water cistern
       else if ((tft.solid[i].spritecol == door9) && player.room == 3) {
-        player.room = 22;
+        player.room = 24;
         player.player_x = 144;
         player.player_y = 204;
-        cameraX = -96;
-        cameraY = -224;
+        player.cameraX = -96;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 22) {
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 24) {
         player.room = 3;
         player.player_x = 144;
         player.player_y = 156;
-        cameraX = -320;
-        cameraY = -32;
+        player.cameraX = -320;
+        player.cameraY = -32;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -1246,20 +1294,20 @@ bool checkcolision(void) // Transformed it into a function
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// arrakeen player.room 10 security
       else if ((tft.solid[i].spritecol == door10) && player.room == 3) {
-        player.room = 23;
+        player.room = 25;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -96;
-        cameraY = -224;
+        player.cameraX = -96;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 23) {
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 25) {
         player.room = 3;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -352;
-        cameraY = -160;
+        player.cameraX = -352;
+        player.cameraY = -160;
         cameraXMin = -336;
         cameraYMin = -448;
       }
@@ -1273,224 +1321,224 @@ bool checkcolision(void) // Transformed it into a function
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////dungeon 2 to village 2
       else if ((tft.solid[i].spritecol == stonecavei2) && player.room == 1) {
-        player.room = 24;
+        player.room = 26;
         player.player_x = 192;
         player.player_y = 140;
-        cameraX = -320;
-        cameraY = -384;
+        player.cameraX = -320;
+        player.cameraY = -384;
         cameraXMin = -320;
         cameraYMin = -384;
       }
-      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 24) {
+      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 26) {
         player.room = 1;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -208;
-        cameraY = -880;
+        player.cameraX = -208;
+        player.cameraY = -880;
         cameraXMin = -880;
         cameraYMin = -1024;
       }
-      else if ((tft.solid[i].spritecol == ladderu1) && player.room == 24) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == ladderu1) && player.room == 26) {
+        player.room = 27;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -64;
-        cameraY = -144;
+        player.cameraX = -64;
+        player.cameraY = -144;
         cameraXMin = -240;
         cameraYMin = -288;
       }
-      else if ((tft.solid[i].spritecol == ladderd1) && player.room == 25) {
-        player.room = 24;
+      else if ((tft.solid[i].spritecol == ladderd1) && player.room == 27) {
+        player.room = 26;
         player.player_x = 150;
         player.player_y = 176;
-        cameraX = -128;
-        cameraY = -112;
+        player.cameraX = -128;
+        player.cameraY = -112;
         cameraXMin = -320;
         cameraYMin = -384;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 2 player.room 1
-      else if ((tft.solid[i].spritecol == door1) && player.room == 25) {
-        player.room = 26;
+      else if ((tft.solid[i].spritecol == door1) && player.room == 27) {
+        player.room = 28;
         player.player_x = 244;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 26) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 28) {
+        player.room = 27;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -0;
-        cameraY = -272;
+        player.cameraX = -0;
+        player.cameraY = -272;
         cameraXMin = -240;
         cameraYMin = -288;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 2 player.room 2
-      else if ((tft.solid[i].spritecol == door2) && player.room == 25) {
-        player.room = 27;
+      else if ((tft.solid[i].spritecol == door2) && player.room == 27) {
+        player.room = 29;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 27) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 29) {
+        player.room = 27;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -192;
-        cameraY = -288;
+        player.cameraX = -192;
+        player.cameraY = -288;
         cameraXMin = -240;
         cameraYMin = -288;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 2 player.room 3
-      else if ((tft.solid[i].spritecol == door3) && player.room == 25) {
-        player.room = 28;
+      else if ((tft.solid[i].spritecol == door3) && player.room == 27) {
+        player.room = 30;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 28) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 30) {
+        player.room = 27;
         player.player_x = 112;
         player.player_y = 160;
-        cameraX = -0;
-        cameraY = -160;
+        player.cameraX = -0;
+        player.cameraY = -160;
         cameraXMin = -240;
         cameraYMin = -288;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 2 player.room 4
-      else if ((tft.solid[i].spritecol == door4) && player.room == 25) {
-        player.room = 29;
+      else if ((tft.solid[i].spritecol == door4) && player.room == 27) {
+        player.room = 31;
         player.player_x = 244;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 29) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 31) {
+        player.room = 27;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -176;
-        cameraY = -160;
+        player.cameraX = -176;
+        player.cameraY = -160;
         cameraXMin = -240;
         cameraYMin = -288;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 2 player.room 5
-      else if ((tft.solid[i].spritecol == door5) && player.room == 25) {
-        player.room = 30;
+      else if ((tft.solid[i].spritecol == door5) && player.room == 27) {
+        player.room = 32;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 30) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 32) {
+        player.room = 27;
         player.player_x = 192;
         player.player_y = 160;
-        cameraX = -240;
-        cameraY = -112;
+        player.cameraX = -240;
+        player.cameraY = -112;
         cameraXMin = -240;
         cameraYMin = -288;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 2 player.room 6
-      else if ((tft.solid[i].spritecol == door6) && player.room == 25) {
-        player.room = 31;
+      else if ((tft.solid[i].spritecol == door6) && player.room == 27) {
+        player.room = 33;
         player.player_x = 58;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 31) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 33) {
+        player.room = 27;
         player.player_x = 112;
         player.player_y = 160;
-        cameraX = -0;
-        cameraY = -32;
+        player.cameraX = -0;
+        player.cameraY = -32;
         cameraXMin = -240;
         cameraYMin = -288;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 2 player.room 7
-      else if ((tft.solid[i].spritecol == door7) && player.room == 25) {
-        player.room = 32;
+      else if ((tft.solid[i].spritecol == door7) && player.room == 27) {
+        player.room = 34;
         player.player_x = 244;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 32) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 34) {
+        player.room = 27;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -96;
-        cameraY = -16;
+        player.cameraX = -96;
+        player.cameraY = -16;
         cameraXMin = -240;
         cameraYMin = -288;
       }
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////// village 2 player.room 8 shop levels 1 and 2
-      else if ((tft.solid[i].spritecol == door8) && player.room == 25) {
-        player.room = 33;
+      else if ((tft.solid[i].spritecol == door8) && player.room == 27) {
+        player.room = 35;
         player.player_x = 124;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -80;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 33) {
-        player.room = 25;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 35) {
+        player.room = 27;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -240;
-        cameraY = -0;
+        player.cameraX = -240;
+        player.cameraY = -0;
         cameraXMin = -240;
         cameraYMin = -288;
       }
-      else if ((tft.solid[i].spritecol == stairsl1) && player.room == 33) {
-        player.room = 34;
+      else if ((tft.solid[i].spritecol == stairsl1) && player.room == 35) {
+        player.room = 36;
         player.player_x = 256;
         player.player_y = 96;
-        cameraX = -800;
-        cameraY = -0;
+        player.cameraX = -800;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == stepsl1) && player.room == 34) {
-        player.room = 33;
+      else if ((tft.solid[i].spritecol == stepsl1) && player.room == 36) {
+        player.room = 35;
         player.player_x = 256;
         player.player_y = 112;
-        cameraX = -80;
-        cameraY = -0;
+        player.cameraX = -80;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -144;
       }
@@ -1505,182 +1553,182 @@ bool checkcolision(void) // Transformed it into a function
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////dungeon 3 to village 3
       else if ((tft.solid[i].spritecol == stonecavei3) && player.room == 1) {
-        player.room = 35;
+        player.room = 37;
         player.player_x = 96;
         player.player_y = 148;
-        cameraX = -0;
-        cameraY = -96;
+        player.cameraX = -0;
+        player.cameraY = -96;
         cameraXMin = -512;
         cameraYMin = -96;
       }
-      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 35) {
+      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 37) {
         player.room = 1;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -768;
-        cameraY = -784;
+        player.cameraX = -768;
+        player.cameraY = -784;
         cameraXMin = -880;
         cameraYMin = -1024;
       }
-      else if ((tft.solid[i].spritecol == ladderu1) && player.room == 35) {
-        player.room = 36;
+      else if ((tft.solid[i].spritecol == ladderu1) && player.room == 37) {
+        player.room = 38;
         player.player_x = 176;
         player.player_y = 160;
-        cameraX = -192;
-        cameraY = -96;
+        player.cameraX = -192;
+        player.cameraY = -96;
         cameraXMin = -160;
         cameraYMin = -224;
       }
-      else if ((tft.solid[i].spritecol == ladderd1) && player.room == 36) {
-        player.room = 35;
+      else if ((tft.solid[i].spritecol == ladderd1) && player.room == 38) {
+        player.room = 37;
         player.player_x = 240;
         player.player_y = 80;
-        cameraX = -512;
-        cameraY = -0;
+        player.cameraX = -512;
+        player.cameraY = -0;
         cameraXMin = -512;
         cameraYMin = -96;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 3 player.room 1
-      else if ((tft.solid[i].spritecol == door1) && player.room == 36) {
-        player.room = 37;
+      else if ((tft.solid[i].spritecol == door1) && player.room == 38) {
+        player.room = 39;
         player.player_x = 244;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 37) {
-        player.room = 36;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 39) {
+        player.room = 38;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -0;
-        cameraY = -192;
+        player.cameraX = -0;
+        player.cameraY = -192;
         cameraXMin = -160;
         cameraYMin = -224;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 3 player.room 2
-      else if ((tft.solid[i].spritecol == door2) && player.room == 36) {
-        player.room = 38;
+      else if ((tft.solid[i].spritecol == door2) && player.room == 38) {
+        player.room = 40;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 38) {
-        player.room = 36;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 40) {
+        player.room = 38;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -160;
-        cameraY = -224;
+        player.cameraX = -160;
+        player.cameraY = -224;
         cameraXMin = -160;
         cameraYMin = -224;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 3 player.room 3
-      else if ((tft.solid[i].spritecol == door3) && player.room == 36) {
-        player.room = 39;
+      else if ((tft.solid[i].spritecol == door3) && player.room == 38) {
+        player.room = 41;
         player.player_x = 244;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 39) {
-        player.room = 36;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 41) {
+        player.room = 38;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -0;
-        cameraY = -80;
+        player.cameraX = -0;
+        player.cameraY = -80;
         cameraXMin = -160;
         cameraYMin = -224;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 3 player.room 4
-      else if ((tft.solid[i].spritecol == door4) && player.room == 36) {
-        player.room = 40;
+      else if ((tft.solid[i].spritecol == door4) && player.room == 38) {
+        player.room = 42;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 40) {
-        player.room = 36;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 42) {
+        player.room = 38;
         player.player_x = 144;
         player.player_y = 160;
-        cameraX = -96;
-        cameraY = -80;
+        player.cameraX = -96;
+        player.cameraY = -80;
         cameraXMin = -160;
         cameraYMin = -224;
       }
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////////// village 3 player.room 5
-      else if ((tft.solid[i].spritecol == door5) && player.room == 36) {
-        player.room = 41;
+      else if ((tft.solid[i].spritecol == door5) && player.room == 38) {
+        player.room = 43;
         player.player_x = 152;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -0;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 41) {
-        player.room = 36;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 43) {
+        player.room = 38;
         player.player_x = 144;
         player.player_y = 144;
-        cameraX = -16;
-        cameraY = -0;
+        player.cameraX = -16;
+        player.cameraY = -0;
         cameraXMin = -160;
         cameraYMin = -224;
       }
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////// village 3 player.room 6 shop levels 1 and 2
-      else if ((tft.solid[i].spritecol == door6) && player.room == 36) {
-        player.room = 42;
+      else if ((tft.solid[i].spritecol == door6) && player.room == 38) {
+        player.room = 44;
         player.player_x = 124;
         player.player_y = 204;
-        cameraX = -0;
-        cameraY = -144;
+        player.cameraX = -0;
+        player.cameraY = -144;
         cameraXMin = -80;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == exit1) && player.room == 42) {
-        player.room = 36;
+      else if ((tft.solid[i].spritecol == exit1) && player.room == 44) {
+        player.room = 38;
         player.player_x = 192;
         player.player_y = 160;
-        cameraX = -208;
-        cameraY = -16;
+        player.cameraX = -208;
+        player.cameraY = -16;
         cameraXMin = -160;
         cameraYMin = -224;
       }
-      else if ((tft.solid[i].spritecol == stairsl1) && player.room == 42) {
-        player.room = 43;
+      else if ((tft.solid[i].spritecol == stairsl1) && player.room == 44) {
+        player.room = 45;
         player.player_x = 256;
         player.player_y = 96;
-        cameraX = -800;
-        cameraY = -0;
+        player.cameraX = -800;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -144;
       }
-      else if ((tft.solid[i].spritecol == stepsl1) && player.room == 43) {
-        player.room = 42;
+      else if ((tft.solid[i].spritecol == stepsl1) && player.room == 45) {
+        player.room = 44;
         player.player_x = 256;
         player.player_y = 112;
-        cameraX = -80;
-        cameraY = -0;
+        player.cameraX = -80;
+        player.cameraY = -0;
         cameraXMin = -80;
         cameraYMin = -144;
       }
@@ -1693,38 +1741,38 @@ bool checkcolision(void) // Transformed it into a function
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ///////////// dungeon 4 and desert path 1
       else if ((tft.solid[i].spritecol == stonecavei4) && player.room == 1) {
-        player.room = 44;
+        player.room = 46;
         player.player_x = 176;
         player.player_y = 128;
-        cameraX = -592;
-        cameraY = -176;
+        player.cameraX = -592;
+        player.cameraY = -176;
         cameraXMin = -592;
         cameraYMin = -176;
       }
-      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 44) {
+      else if ((tft.solid[i].spritecol == stonecaveo1) && player.room == 46) {
         player.room = 1;
         player.player_x = 144;
         player.player_y = 144;
-        cameraX = -80;
-        cameraY = -0;
+        player.cameraX = -80;
+        player.cameraY = -0;
         cameraXMin = -880;
         cameraYMin = -1024;
       }
-      else if ((tft.solid[i].spritecol == stonecaveo2) && player.room == 44) {
-        player.room = 45;
+      else if ((tft.solid[i].spritecol == stonecaveo2) && player.room == 46) {
+        player.room = 47;
         player.player_x = 208;
         player.player_y = 160;
-        cameraX = -4480;
-        cameraY = -32;
+        player.cameraX = -4480;
+        player.cameraY = -32;
         cameraXMin = -4480;
         cameraYMin = -64;
       }
-      else if ((tft.solid[i].spritecol == stonecavei1) && player.room == 45) {
-        player.room = 44;
+      else if ((tft.solid[i].spritecol == stonecavei1) && player.room == 47) {
+        player.room = 46;
         player.player_x = 70;
         player.player_y = 192;
-        cameraX = -0;
-        cameraY = -176;
+        player.cameraX = -0;
+        player.cameraY = -176;
         cameraXMin = -592;
         cameraYMin = -176;
       }
@@ -1732,75 +1780,11 @@ bool checkcolision(void) // Transformed it into a function
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
       ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
+      }
     }
-
-  }
   return false; // Return false if don't touch anything
-}
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-////////// 1 BY 1 functions for player movement
-/*void playerUp(){
-      tft.writeRectNBPP(player.player_x, player.player_y,  16, 16, 4, paulrearwa, palette);
-      tft.writeRectNBPP(player.player_x, player.player_y, 16, 16, 4, paulrearwb, palette);
-
-    player.player_direction = 1;
-     player.player_y -= 4;
-     if(checkcolision()) {
-        player.player_y += 4;}
-
-     if(player.player_y <= 16){
-        player.player_y = 16;}
   }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void playerDown(){
-      tft.writeRectNBPP(player.player_x, player.player_y,  16, 16, 4, paulfrontwa, palette);
-      tft.writeRectNBPP(player.player_x, player.player_y, 16, 16, 4, paulfrontwb, palette);
 
-    player.player_direction = 1;
-     player.player_y += 4;
-     if(checkcolision()) {
-        player.player_y -= 4;}
-
-     if(player.player_y <= 224){
-        player.player_y = 224;}
-  }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void playerLeft(){
-  tft.writeRectNBPP(player.player_x, player.player_y,16,16,4,paulleftw,palette);
-    tft.writeRectNBPP(player.player_x, player.player_y,16,16,4,paulleft,palette);
-    player.player_direction = 3;
-    player.player_x -= 4;
-    if(checkcolision())
-   {
-      player.player_x += 4;}
-
-   if(player.player_x >= 304){
-      player.player_x = 304;}
-  }
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  void playerRight(){
-  tft.writeRectNBPP(player.player_x, player.player_y,16,16,4,paulrightw,palette);
-    tft.writeRectNBPP(player.player_x, player.player_y,16,16,4,paulright,palette);
-    player.player_direction = 4;
-    player.player_x += 4;
-  if(checkcolision())
-  {
-    player.player_x -= 4;}
-
-            if(player.player_x <= 16){
-              player.player_x = 16;}
-  }*/
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////

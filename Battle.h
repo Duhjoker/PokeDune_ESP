@@ -3,7 +3,30 @@
 
 #include "Player.h"
 #include "Variables.h"
-#include "Monsters.h"
+#include "Bitmaps.h"
+///////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////
+/*void DrawMonster(uint8_t Monid)
+  {
+  tft.setCursor(monster.cursor_x, monster.cursor_y);
+  tft.setTextSize(2);
+  tft.setTextColor(WHITE);
+  tft.println(getMonName(monster.MonId));
+
+  switch (monId) {
+    case 0: tft.writeRectNBPP(monster.x, monster.y, 34, 24, 4, cavespider, palette); ///how do add bitmap names
+    case 1: tft.writeRectNBPP(monster.x, monster.y, 48, 40, 4, desertbat, palette); ///how do add bitmap names
+    case 2: tft.writeRectNBPP(monster.x, monster.y, 34, 22, 4, deserthare, palette); ///how do add bitmap names
+    case 3: tft.writeRectNBPP(monster.x, monster.y, 44, 34, 4, desertscorp, palette); ///how do add bitmap names
+    case 4: tft.writeRectNBPP(monster.x, monster.y, 28, 36, 4, desertslig, palette); ///how do add bitmap names
+    case 5: tft.writeRectNBPP(monster.x, monster.y, 34, 40, 4, facedancer, palette); ///how do add bitmap names
+    case 6: tft.writeRectNBPP(monster.x, monster.y, 34, 32, 4, outcast, palette); ///how do add bitmap names
+    case 7: tft.writeRectNBPP(monster.x, monster.y, 38, 36, 4, kangaroomouse, palette); ///how do add bitmap names
+    case 8: tft.writeRectNBPP(monster.x, monster.y, 44, 32, 4, lazatiger, palette); ///how do add bitmap names
+    case 9: tft.writeRectNBPP(monster.x, monster.y, 24, 34, 4, sandworm, palette); ///how do add bitmap names
+  }
+*/
+
 
 //////////////////////////////////////////////////////////////////////////
 
