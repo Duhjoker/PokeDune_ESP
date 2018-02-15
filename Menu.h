@@ -4,7 +4,7 @@
 #include "Variables.h"
 #include "Player.h"
 #include "Inventory.h"
-#include <EEPROM.h>
+
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////////
@@ -210,10 +210,8 @@ void loadgame() {
     }
     else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectB.x, rectB.y, rectB.width, rectB.height, rectC.x, rectC.y, rectC.width, rectC.height)))
     {
- //      checkLoad(); {
-        load();
-        state = STATE_Player;
-//      }
+      load();
+       state = STATE_Player;
     }
   }
 }
@@ -288,7 +286,7 @@ void savegame() {
   //////////////////////////////////////////////////////////////////////////////
   if (!digitalRead(IRQ_PIN2)) {
     uint32_t buttons = ss2.digitalReadBulk(button_mask2);
-    if (! (buttons & (1 << BUTTON_A))) {
+     if (! (buttons & (1 << BUTTON_A))) {
       state = STATE_Menu;
     }
     //////////////////////////////////////////////////////////////////////////////
@@ -297,13 +295,14 @@ void savegame() {
 
     if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectA.x, rectA.y, rectA.width, rectA.height, rectC.x, rectC.y, rectC.width, rectC.height)))
     {
-      save();
-      state = STATE_Player;
+        save();
+         tft.Popup(F(" ""Game Saved"" "), 1, 120, 120);
+         state = STATE_Player;
     }
     else if ((! (buttons & (1 << BUTTON_X)) && tft.collideRectRect( rectB.x, rectB.y, rectB.width, rectB.height, rectC.x, rectC.y, rectC.width, rectC.height)))
     {
       load();
-        state = STATE_Player;
+       state = STATE_Player;
     }
   }
 }

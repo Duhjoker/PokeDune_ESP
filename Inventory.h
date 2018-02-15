@@ -2,7 +2,69 @@
 #define _Inventory_H_
 
 #include "Variables.h"
-#include "Bitmaps.h"
+
+#define ITEM_Spice          0
+#define ITEM_Water          1
+#define ITEM_Ring           2
+#define ITEM_Crysknife      3
+#define ITEM_Thumper        4
+#define ITEM_Glowglobe      5
+#define ITEM_Stilltent      6
+#define ITEM_Abba           7
+#define ITEM_Stillsuit      8
+#define ITEM_Fremkit        9
+
+#define NoItem              255
+#define MaxChests           2
+
+#define MAX_ITEM            10
+#define SLOT_AVAILABLE      255
+#define NO_SLOT_AVAILABLE   254
+#define NUMBER_OF_SLOTS     12
+
+struct Slot {
+  int slot_x;
+  int slot_y;
+  int slot_w;
+  int slot_h;
+  uint8_t itemId;
+  uint8_t quantity;
+  uint8_t S;     // number of items in stack
+};
+
+Slot slots[NUMBER_OF_SLOTS] = {
+  { 180, 16,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 34,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 52,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 70,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 88,  81, 16, SLOT_AVAILABLE, 0},
+  { 180, 106, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 124, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 142, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 160, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 178, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 196, 81, 16, SLOT_AVAILABLE, 0},
+  { 180, 214, 81, 16, SLOT_AVAILABLE, 0},
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////
+class Chest
+  {
+  public:
+    uint16_t w;
+    uint16_t h;
+    uint8_t itemId;
+    bool isOpen;
+  };
+
+
+  Chest chests[] =
+  {
+  {16, 16, ITEM_Spice, false },
+  {16, 16, ITEM_Spice, false },
+
+  };
+
 ///////////////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////////////
 bool addItemToInventory(uint8_t itemId) {

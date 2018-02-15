@@ -7,8 +7,8 @@
 #include <EEPROM.h>
 #include "Variables.h"
 #include "Player.h"
+
 #include "Battle.h"
-#include "Player.h"
 #include "Menu.h"
 #include "Inventory.h"
 //////////////////////////////////////////////////////////////////////////////
@@ -75,18 +75,6 @@ void setup() {
   pinMode(IRQ_PIN2, INPUT);
   /////////////////////////////////////////////////////////
   /////////////////////////////////////////////////////////
-  if (!EEPROM.begin(EEPROM_SIZE))
-  {
-    Serial.println("failed to initialise EEPROM"); delay(1000000);
-  }
-  Serial.println(" bytes read from Flash . Values are:");
-  for (int i = 0; i < EEPROM_SIZE; i++)
-  {
-    Serial.print(byte(EEPROM.read(i))); Serial.print(" ");
-  }
-  Serial.println();
-  Serial.println("writing random n. in memory");
-
   tft.useFrameBuffer(use_fb);
 }
 
